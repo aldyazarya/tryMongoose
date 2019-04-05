@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const isEmail = require('validator/lib/isEmail');
+const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -46,6 +47,15 @@ const userSchema = new mongoose.Schema({
 })
 
 
+userSchema.pre('save', async function (next) { //penulisannya pake function biasa, tidak menggunakan arrow function
+    const user = this //access to the user document {name, age, email, password}
+
+    user.password = await bcrypt.hash (user.password, 8) // proses hash the new incoming password
+    // if(user.isModified('password')) { //is password field modified?
+    // }
+    
+    next()
+})
 
 const User = mongoose.model ('User', userSchema )
 

@@ -62,6 +62,8 @@ app.patch('/users/:id', async (req, res) => { // update user by id
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
     const isValidOperation = updates.every(update => allowedUpdates.includes(update))
+    //method every, wajib return boolean(true,false)
+    //jika ada salah satu saja return false, maka every akan mereturn false
     // every will test every data in array, if all of it can give return of true, isValidOperations will be true
     // if there is atleast one false, isValidOperation will be false
 
